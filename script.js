@@ -1,7 +1,7 @@
 'use strict';
 
 /* ---------- Configuration ---------- */
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'https://mental-health-prediction-by-social-media.onrender.com/';
 const PREDICT_URL = `${API_BASE}/predict`;
 const REQUEST_TIMEOUT_MS = 15000;
 const HEALTH_INTERVAL_MS = 15000;

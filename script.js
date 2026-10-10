@@ -1,9 +1,9 @@
 'use strict';
 
 /* ---------- Configuration ---------- */
-const API_BASE = 'https://mental-health-prediction-by-social-media.onrender.com/';
+const API_BASE = 'https://mental-health-prediction-by-social-media.onrender.com';
 const PREDICT_URL = `${API_BASE}/predict`;
-const REQUEST_TIMEOUT_MS = 15000;
+const REQUEST_TIMEOUT_MS = 60000; // hosted free tiers can take ~30-50s to wake up
 const HEALTH_INTERVAL_MS = 15000;
 
 const PLATFORMS = ['Facebook', 'LinkedIn', 'Instagram', 'Snapchat', 'Twitter', 'YouTube', 'TikTok', 'LINE', 'KakaoTalk', 'VKontakte', 'WhatsApp', 'WeChat'];
@@ -65,7 +65,7 @@ function setStatus(state, text) {
 
 async function checkConnection() {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 5000);
+  const timer = setTimeout(() => controller.abort(), 20000);
   try {
     const res = await fetch(`${API_BASE}/`, { method: 'GET', signal: controller.signal });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -206,15 +206,14 @@ async function requestPrediction(payload) {
   } catch (err) {
     if (err.name === 'AbortError') {
       const e = new Error('The request timed out.');
-      e.details = ['The backend took too long to respond. Check that it is running and try again.'];
+      e.details = ['The service took too long to respond. It may be waking up, so please try again.'];
       throw e;
     }
     if (err instanceof TypeError) { // fetch network failure or CORS block
       const e = new Error('Could not reach the prediction API.');
       e.details = [
-        `Make sure FastAPI is running at ${API_BASE}.`,
-        'Open this page through a local server (http://localhost:5500), not by double-clicking the file.',
-        'If the browser console mentions CORS, allow this page’s origin in the FastAPI CORS settings.'
+        'The prediction service may be waking up or temporarily offline. Wait a few seconds and try again.',
+        'If it keeps failing, check that the API is running and that its CORS settings allow this site’s address.'
       ];
       throw e;
     }

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindScope – Digital Wellness Assessment</title>
+  <meta name="description" content="Estimate a mental-health-related score from academic habits, social media usage, sleep, activity and stress.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#assessment">Skip to assessment</a>
+
+  <header class="navbar" id="top">
+    <div class="container navbar__inner">
+      <a href="#overview" class="brand"><i class="fa-solid fa-brain" aria-hidden="true"></i> MindScope</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+      <nav class="nav-menu" id="navMenu" aria-label="Main">
+        <a href="#overview">Overview</a>
+        <a href="#assessment">Assessment</a>
+        <a href="#about">About</a>
+        <span class="status status--checking" id="connectionStatus" role="status" aria-live="polite">
+          <span class="status__dot" aria-hidden="true"></span><span id="connectionText">Checking…</span>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="overview">
+      <div class="container hero__grid">
+        <div>
+          <h1>Understand Your Digital Wellness</h1>
+          <p class="hero__lead">MindScope estimates a mental-health-related score from your academic habits, social media usage, sleep, physical activity and stress, using a trained machine learning model.</p>
+          <div class="hero__actions">
+            <a href="#assessment" class="btn btn--primary" data-scroll>Start Assessment</a>
+            <a href="#how-it-works" class="btn btn--ghost" data-scroll>How It Works</a>
+          </div>
+        </div>
+        <div class="hero__art" aria-hidden="true">
+          <svg viewBox="0 0 320 260" role="presentation">
+            <circle cx="160" cy="130" r="112" fill="#E3F5F0"/>
+            <circle cx="160" cy="130" r="82" fill="none" stroke="#1F9E8F" stroke-width="2" stroke-dasharray="3 9" stroke-linecap="round"/>
+            <path d="M30 150 H92 L112 100 L142 190 L170 70 L196 150 H290" fill="none" stroke="#12263A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="170" cy="70" r="7" fill="#1F9E8F"/>
+          </svg>
+          <span class="chip chip--a"><i class="fa-solid fa-moon"></i> Sleep</span>
+          <span class="chip chip--b"><i class="fa-solid fa-mobile-screen"></i> Screen time</span>
+          <span class="chip chip--c"><i class="fa-solid fa-person-running"></i> Activity</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="assessment" aria-labelledby="formTitle">
+      <div class="container container--narrow">
+        <div class="card form-card">
+          <h2 id="formTitle">Assessment</h2>
+          <p class="muted">Fields marked <span class="req">*</span> are required. Nothing is stored by this page.</p>
+
+          <div class="alert alert--error" id="formError" role="alert" hidden></div>
+
+          <form id="assessmentForm" novalidate>
+            <fieldset>
+              <legend><i class="fa-solid fa-user" aria-hidden="true"></i> Personal information</legend>
+              <div class="grid">
+                <div class="field">
+                  <label for="age">Age <span class="req">*</span></label>
+                  <div class="input-unit"><input type="number" id="age" name="age" min="10" max="100" step="1" placeholder="e.g. 21" inputmode="numeric" required><span>years</span></div>
+                  <small class="hint">Whole number from 10 to 100.</small><small class="error" id="err-age"></small>
+                </div>
+                <div class="field">
+                  <label for="gender">Gender <span class="req">*</span></label>
+                  <select id="gender" name="gender" required><option value="">Select…</option><option>Male</option><option>Female</option></select>
+                  <small class="error" id="err-gender"></small>
+                </div>
+                <div class="field">
+                  <label for="country">Country <span class="req">*</span></label>
+                  <input type="text" id="country" name="country" list="countryList" placeholder="Start typing a country" autocomplete="off" required>
+                  <datalist id="countryList"></datalist>
+                  <small class="hint">Not listed? Type your country’s name; the model groups it as “Other” automatically.</small><small class="error" id="err-country"></small>
+                </div>
+                <div class="field">
+                  <label for="academic_level">Academic level <span class="req">*</span></label>
+                  <select id="academic_level" name="academic_level" required><option value="">Select…</option><option>Undergraduate</option><option>Graduate</option><option>High School</option></select>
+                  <small class="error" id="err-academic_level"></small>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> Social media habits</legend>
+              <div class="grid">
+                <div class="field">
+                  <label for="most_used_platform">Most used platform <span class="req">*</span></label>
+                  <select id="most_used_platform" name="most_used_platform" required><option value="">Select…</option></select>
+                  <small class="error" id="err-most_used_platform"></small>
+                </div>
+                <div class="field">
+                  <label for="purpose_of_use">Main purpose of use <span class="req">*</span></label>
+                  <select id="purpose_of_use" name="purpose_of_use" required><option value="">Select…</option><option>Networking</option><option>Education</option><option>Entertainment</option><option>News</option></select>
+                  <small class="error" id="err-purpose_of_use"></small>
+                </div>
+                <div class="field">
+                  <label for="avg_daily_usage_hours">Average daily usage <span class="req">*</span></label>
+                  <div class="input-unit"><input type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="24" step="any" placeholder="e.g. 4.5" inputmode="decimal" required><span>hrs/day</span></div>
+                  <small class="hint">0 to 24, decimals allowed.</small><small class="error" id="err-avg_daily_usage_hours"></small>
+                </div>
+                <div class="field">
+                  <label for="daily_unlocks">Daily phone unlocks <span class="req">*</span></label>
+                  <div class="input-unit"><input type="number" id="daily_unlocks" name="daily_unlocks" min="0" step="1" placeholder="e.g. 65" inputmode="numeric" required><span>times</span></div>
+                  <small class="hint">Whole number, 0 or more.</small><small class="error" id="err-daily_unlocks"></small>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i> Lifestyle &amp; wellbeing</legend>
+              <div class="grid">
+                <div class="field">
+                  <label for="study_hours">Study hours <span class="req">*</span></label>
+                  <div class="input-unit"><input type="number" id="study_hours" name="study_hours" min="0" max="24" step="any" placeholder="e.g. 5" inputmode="decimal" required><span>hrs/day</span></div>
+                  <small class="error" id="err-study_hours"></small>
+                </div>
+                <div class="field">
+                  <label for="physical_activity_hours">Physical activity <span class="req">*</span></label>
+                  <div class="input-unit"><input type="number" id="physical_activity_hours" name="physical_activity_hours" min="0" max="24" step="any" placeholder="e.g. 1" inputmode="decimal" required><span>hrs/day</span></div>
+                  <small class="error" id="err-physical_activity_hours"></small>
+                </div>
+                <div class="field">
+                  <label for="sleep_hours_per_night">Sleep per night <span class="req">*</span></label>
+                  <div class="input-unit"><input type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="24" step="any" placeholder="e.g. 7.5" inputmode="decimal" required><span>hrs/night</span></div>
+                  <small class="error" id="err-sleep_hours_per_night"></small>
+                </div>
+                <div class="field">
+                  <label for="stress_level">Stress level <span class="req">*</span></label>
+                  <select id="stress_level" name="stress_level" required><option value="">Select…</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select>
+                  <small class="error" id="err-stress_level"></small>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn--ghost" id="resetBtn"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset Form</button>
+              <button type="submit" class="btn btn--primary" id="submitBtn">
+                <span class="spinner" aria-hidden="true" hidden></span>
+                <span id="submitLabel">Analyze My Wellness</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight" id="results" aria-labelledby="resultsTitle" tabindex="-1" hidden>
+      <div class="container container--narrow">
+        <div class="card result-card">
+          <h2 id="resultsTitle">Your Assessment Results</h2>
+          <div class="result-grid">
+            <div class="gauge" aria-hidden="true">
+              <svg viewBox="0 0 160 160">
+                <circle class="gauge__track" cx="80" cy="80" r="68"/>
+                <circle class="gauge__fill" id="gaugeFill" cx="80" cy="80" r="68" transform="rotate(-90 80 80)"/>
+              </svg>
+              <div class="gauge__label"><strong id="scoreValue">–</strong><span>model output</span></div>
+            </div>
+            <div>
+              <p class="sr-only" id="resultAnnounce" role="status" aria-live="polite"></p>
+              <p>The trained model returned <strong id="scoreInline">–</strong> for the information you entered.</p>
+              <p class="muted">This is a model-generated estimate, not a medical diagnosis. The scale and meaning of the value depend on how the model was trained, so it is shown without a risk label.</p>
+              <div class="ref">
+                <label for="refMax">Optional: if you know the model’s maximum score, enter it to fill the ring proportionally.</label>
+                <input type="number" id="refMax" min="0" step="any" placeholder="e.g. 100">
+              </div>
+            </div>
+          </div>
+          <h3>Submitted information</h3>
+          <dl class="summary" id="summaryList"></dl>
+          <div class="form-actions no-print">
+            <button class="btn btn--ghost" id="retakeBtn"><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> Retake Assessment</button>
+            <button class="btn btn--primary" id="printBtn"><i class="fa-solid fa-print" aria-hidden="true"></i> Print / Save as PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works" aria-labelledby="howTitle">
+      <div class="container">
+        <h2 id="howTitle" class="section-title">How it works</h2>
+        <div class="steps">
+          <article class="card step"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i><h3>Share Your Habits</h3><p>Enter your academic, digital usage and lifestyle information.</p></article>
+          <article class="card step"><i class="fa-solid fa-microchip" aria-hidden="true"></i><h3>Machine Learning Analysis</h3><p>The data is sent to the existing FastAPI backend for model inference.</p></article>
+          <article class="card step"><i class="fa-solid fa-chart-simple" aria-hidden="true"></i><h3>View Your Result</h3><p>Review the numerical estimate returned by the trained model.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="aboutTitle">
+      <div class="container container--narrow">
+        <div class="card notice">
+          <h2 id="aboutTitle"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i> Privacy &amp; responsible use</h2>
+          <ul>
+            <li>This tool provides a machine-learning estimate, not a medical diagnosis.</li>
+            <li>The result should not replace professional mental-health advice.</li>
+            <li>MindScope does not detect, diagnose or treat any mental-health condition.</li>
+            <li>Your answers are sent only to the prediction service this app is connected to, solely to compute your result. This page does not use analytics or tracking, and it does not send your data anywhere else.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <strong class="brand"><i class="fa-solid fa-brain" aria-hidden="true"></i> MindScope</strong>
+        <p>Estimates a mental-health-related score from lifestyle and social media data. Built as a Machine Learning Project.</p>
+        <p class="muted">Predictions depend on the trained model and its input data.</p>
+      </div>
+      <a href="#top" class="btn btn--ghost" data-scroll><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Back to top</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

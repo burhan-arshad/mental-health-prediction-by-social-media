@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="author" content="Burhan Arshad">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MindScope – Digital Wellness Assessment</title>
   <meta name="description" content="Estimate a mental-health-related score from academic habits, social media usage, sleep, activity and stress.">
@@ -166,16 +167,12 @@
                 <circle class="gauge__track" cx="80" cy="80" r="68"/>
                 <circle class="gauge__fill" id="gaugeFill" cx="80" cy="80" r="68" transform="rotate(-90 80 80)"/>
               </svg>
-              <div class="gauge__label"><strong id="scoreValue">–</strong><span>model output</span></div>
+              <div class="gauge__label"><strong id="scoreValue">–</strong><span>model estimate</span></div>
             </div>
             <div>
               <p class="sr-only" id="resultAnnounce" role="status" aria-live="polite"></p>
-              <p>The trained model returned <strong id="scoreInline">–</strong> for the information you entered.</p>
-              <p class="muted">This is a model-generated estimate, not a medical diagnosis. The scale and meaning of the value depend on how the model was trained, so it is shown without a risk label.</p>
-              <div class="ref">
-                <label for="refMax">Optional: if you know the model’s maximum score, enter it to fill the ring proportionally.</label>
-                <input type="number" id="refMax" min="0" step="any" placeholder="e.g. 100">
-              </div>
+              <p>The trained model estimated <strong id="scoreInline">–</strong> for the information you entered.</p>
+              <p class="muted">The model outputs a score from 0 to 10, shown here as a percentage (score × 10). This is a model-generated estimate, not a medical diagnosis, and it should not replace professional advice.</p>
             </div>
           </div>
           <h3>Submitted information</h3>
@@ -220,6 +217,7 @@
         <strong class="brand"><i class="fa-solid fa-brain" aria-hidden="true"></i> MindScope</strong>
         <p>Estimates a mental-health-related score from lifestyle and social media data. Built as a Machine Learning Project.</p>
         <p class="muted">Predictions depend on the trained model and its input data.</p>
+        <p class="developer">Developed by <a href="https://github.com/burhan-arshad" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> <strong>Burhan Arshad</strong></a> &middot; <a href="https://github.com/burhan-arshad/mental-health-prediction-by-social-media" target="_blank" rel="noopener noreferrer">Source code</a></p>
       </div>
       <a href="#top" class="btn btn--ghost" data-scroll><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Back to top</a>
     </div>

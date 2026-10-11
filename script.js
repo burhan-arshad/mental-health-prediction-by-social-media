@@ -43,6 +43,7 @@ const statusText = $('connectionText');
 const navToggle = $('navToggle');
 const navMenu = $('navMenu');
 const gaugeFill = $('gaugeFill');
+const MAX_SCORE = 10; // model's maximum score
 const GAUGE_LEN = 2 * Math.PI * 68;
 
 let isSubmitting = false;
@@ -225,21 +226,17 @@ async function requestPrediction(payload) {
 
 /* ---------- Results ---------- */
 function updateGauge() {
-  const ref = parseFloat($('refMax').value);
-  let fraction = 1; // no known scale: neutral full ring (not a percentage)
-  if (Number.isFinite(ref) && ref > 0 && lastScore !== null) {
-    fraction = Math.min(Math.max(lastScore / ref, 0), 1);
-  }
+  const fraction = lastScore === null ? 0 : Math.min(Math.max(lastScore / MAX_SCORE, 0), 1);
   gaugeFill.style.strokeDasharray = GAUGE_LEN;
   gaugeFill.style.strokeDashoffset = GAUGE_LEN * (1 - fraction);
 }
 
 function renderResults(score, payload) {
   lastScore = score;
-  const formatted = score.toFixed(2);
-  $('scoreValue').textContent = formatted;
-  $('scoreInline').textContent = formatted;
-  $('resultAnnounce').textContent = `Assessment complete. The model returned ${formatted}.`;
+  const percent = Math.min(Math.max((score / MAX_SCORE) * 100, 0), 100).toFixed(2);
+  $('scoreValue').textContent = `${percent}%`;
+  $('scoreInline').textContent = `${percent}% (${score.toFixed(2)} out of ${MAX_SCORE})`;
+  $('resultAnnounce').textContent = `Assessment complete. The model estimated ${percent} percent.`;
 
   gaugeFill.style.strokeDasharray = GAUGE_LEN;
   gaugeFill.style.strokeDashoffset = GAUGE_LEN;
@@ -293,7 +290,6 @@ function resetAll() {
 function handleRetake() {
   resetAll();
   resultsSection.hidden = true;
-  $('refMax').value = '';
   lastScore = null;
   $('assessment').scrollIntoView({ behavior: 'smooth' });
   $('age').focus({ preventScroll: true });
@@ -314,7 +310,6 @@ function init() {
   $('resetBtn').addEventListener('click', resetAll);
   $('retakeBtn').addEventListener('click', handleRetake);
   $('printBtn').addEventListener('click', () => window.print());
-  $('refMax').addEventListener('input', updateGauge);
 
   // Clear a field's error as soon as the user edits it
   FIELDS.forEach((f) => {

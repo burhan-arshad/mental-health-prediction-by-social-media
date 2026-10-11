@@ -145,3 +145,7 @@ input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 
   .card{box-shadow:none;border:1px solid #ccc}
 }
 @media print{#results[hidden]{display:none!important}}
+
+.footer .developer{color:#fff;margin-top:var(--s2)}
+.footer .developer a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35)}
+.footer .developer a:hover{border-bottom-color:#fff}
